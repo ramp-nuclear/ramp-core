@@ -1,5 +1,6 @@
 """JSON encoding and decoding tools for RAMP objects"""
 import json
+from typing import Hashable, Any
 
 from ramp_core.serializable import Serializable
 
@@ -61,12 +62,10 @@ class RampJSONDecoder(json.JSONDecoder):
     >>> v.a == b.a
     True
 
-
     """
 
-    def __init__(self, supported: dict[str, Serializable]):
-        super().__init__()
-        self.supported = supported
+    supported: dict[str, Serializable]
+
 
     def decode(self, s: str, **kw):
         pobj = super().decode(s, **kw)
@@ -82,3 +81,31 @@ class RampJSONDecoder(json.JSONDecoder):
                 return typ.deserialize(pobj[DATA], supported=self.supported)
             return typ.deserialize(pobj, supported=self.supported)
         return pobj
+
+
+def unserializable(d: dict | list | tuple) -> list[tuple[list[Hashable], Any]]:
+    """Returns which items were unserializable. Useful to debug serializability.
+    """
+    lst = []
+    if isinstance(d, dict]:
+        iters = d.items()
+    elif isinstance(d, (list, tuple)):
+        iters = enumerate(d)
+    else:
+        try:
+            json.dumps(d, cls=RampJSONEncoder)
+        except TypeError:
+            return [([], d)]
+        else:
+            return []
+
+    for a, b in iters:
+        if isinstance(b, (dict, list, tuple)):
+            lst.extend([([a] + access, v) for access, v in unserializable(b)])
+        else:
+            try:
+                json.dumps(b, cls=RampJSONEncoder)
+            except TypeError:
+                lst.append(([a], b))
+    return lst
+
