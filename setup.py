@@ -22,4 +22,5 @@ if __name__ == '__main__':
               "Operating System :: OS Independent",
               ],
           python_requires='>=3.10',
+          requirements_yml="requirements.yml",
           )
