@@ -46,7 +46,7 @@ class RampJSONDecoder(json.JSONDecoder):
     ...         return self.ser_identifier, {'a': self.a}
     ...
     ...     @classmethod
-    ...     def deserialize(cls, d):
+    ...     def deserialize(cls, d, **_):
     ...         return cls(**d)
     >>>
     >>> b = A(5)
