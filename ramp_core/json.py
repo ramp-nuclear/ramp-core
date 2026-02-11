@@ -87,7 +87,7 @@ def unserializable(d: dict | list | tuple) -> list[tuple[list[Hashable], Any]]:
     """Returns which items were unserializable. Useful to debug serializability.
     """
     lst = []
-    if isinstance(d, dict]:
+    if isinstance(d, dict):
         iters = d.items()
     elif isinstance(d, (list, tuple)):
         iters = enumerate(d)
