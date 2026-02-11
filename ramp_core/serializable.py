@@ -6,7 +6,7 @@ from pathlib import PurePath
 from typing import Protocol, runtime_checkable, Any, Type, TypeVar, ClassVar, Sequence
 try:  # To allow for older Python versions where Self was not supported
     from typing import Self
-except ImportError
+except ImportError:
     Self = TypeVar("Self")
 
 import numpy as np
