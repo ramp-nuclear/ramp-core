@@ -34,6 +34,9 @@ jobs:
     - name: Install this package
       run: |
         pip install .[test]
+    - name: Doctest
+      run: |
+        pytest -v --doctest-modules ramp_core
     - name: Test in test directory
       run: |
         cd tests
