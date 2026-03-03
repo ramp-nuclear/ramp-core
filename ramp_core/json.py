@@ -1,6 +1,6 @@
 """JSON encoding and decoding tools for RAMP objects"""
 import json
-from typing import Hashable, Any
+from typing import Any, Hashable
 
 from ramp_core.serializable import Serializable
 

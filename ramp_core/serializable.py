@@ -3,7 +3,8 @@
 """
 
 from pathlib import PurePath
-from typing import Protocol, runtime_checkable, Any, Type, TypeVar, ClassVar, Sequence
+from typing import Any, ClassVar, Protocol, Sequence, Type, TypeVar, runtime_checkable
+
 try:  # To allow for older Python versions where Self was not supported
     from typing import Self
 except ImportError:
